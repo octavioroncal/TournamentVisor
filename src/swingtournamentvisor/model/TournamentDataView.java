@@ -70,8 +70,9 @@ public final class TournamentDataView {
                                 if (isPresentBreakState(stateType.DB_BREAK)) {
                                     setDinnerBreak();
                                 } else {
-                                    if (isPresentBreakState(stateType.CR_BREAK))
+                                    if (isPresentBreakState(stateType.CR_BREAK)) {
                                         setChipRaceBreak();
+                                    }
                                 }
                                 getLevelTimeService().setLevelTime(breakTime * 60);
                             }
@@ -280,7 +281,7 @@ public final class TournamentDataView {
     }
 
     public void setLevel(final int level) {
-        levelInProgress.setLevel(level);
+        setLevelInProgress(level);
     }
 
     public void setChipsAverage(int chipsAverage) {
@@ -498,10 +499,14 @@ public final class TournamentDataView {
     public boolean isAddonTournament() {
         return addonTournament;
     }
-
-    @XmlElement
+    
     public Level getLevelInProgress() {
         return levelInProgress;
+    }
+    
+    @XmlElement
+    public int getLevel(){
+        return levelInProgress.getLevel();
     }
 
     @XmlElement

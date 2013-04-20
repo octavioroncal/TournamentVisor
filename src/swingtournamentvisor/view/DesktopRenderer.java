@@ -2,6 +2,7 @@ package swingtournamentvisor.view;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import swingtournamentvisor.model.Announcement;
 import swingtournamentvisor.model.DataChangedListener;
 import swingtournamentvisor.model.LevelTimeListener;
@@ -16,9 +17,9 @@ public final class DesktopRenderer {
     private DataChangedListener dataListener;
     private Thread announcementThread;
     
-    public DesktopRenderer(TournamentDataView dataParamenter, final Desktop720 desktop) {
+    public DesktopRenderer(TournamentDataView dataParamenter, final JFrame desktopFrame) {
         this.tournamentDataView = dataParamenter;
-        this.desktop = desktop;
+        this.desktop = (Desktop720) desktopFrame;
         setTimeListener();
         dataListener = new DataChangedListener() {
             @Override
@@ -136,11 +137,11 @@ public final class DesktopRenderer {
         ArrayList<PrizePosition> prizesList = tournamentDataView.getPrizeStruct().getPercentagesList();
         desktop.getMoneyFirst().setText(prizesList.get(0).getMoney() + "€");
         int sizeList = prizesList.size();
-        for (Integer i = 0; i < sizeList; i++) {
+/*        for (Integer i = 0; i < sizeList; i++) {
             desktop.getPosList().get(i).setText(i + 2 + " º");
         }
         for (Integer i = 0; i < sizeList; i++) {
             desktop.getMoneyList().get(i).setText(prizesList.get(i + 1).getMoney() + " €");
-        }
+        }*/
     }
 }

@@ -290,6 +290,7 @@ public class Desktop1080 extends javax.swing.JFrame {
         played.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         played.setText(bundle.getString("Desktop1080.rebuys.text")); // NOI18N
         leftPanel.add(played, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, 160, 45));
+        played.getAccessibleContext().setAccessibleName(bundle.getString("Desktop1080.played.AccessibleContext.accessibleName")); // NOI18N
 
         breakInLabel.setFont(new java.awt.Font("Exo", 1, 36)); // NOI18N
         breakInLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -302,6 +303,7 @@ public class Desktop1080 extends javax.swing.JFrame {
         breakIn.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         breakIn.setText(bundle.getString("Desktop1080.rebuys.text")); // NOI18N
         leftPanel.add(breakIn, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 200, 150, 45));
+        breakIn.getAccessibleContext().setAccessibleName(bundle.getString("Desktop1080.breakIn.AccessibleContext.accessibleName")); // NOI18N
 
         buyinsLabel.setFont(new java.awt.Font("Exo", 1, 36)); // NOI18N
         buyinsLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -324,6 +326,7 @@ public class Desktop1080 extends javax.swing.JFrame {
         rebuys.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         rebuys.setText(bundle.getString("Desktop1080.rebuys.text")); // NOI18N
         leftPanel.add(rebuys, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 350, 120, 45));
+        rebuys.getAccessibleContext().setAccessibleName(bundle.getString("Desktop1080.rebuys.AccessibleContext.accessibleName")); // NOI18N
 
         addonsLabel.setFont(new java.awt.Font("Exo", 1, 36)); // NOI18N
         addonsLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -425,6 +428,7 @@ public class Desktop1080 extends javax.swing.JFrame {
         subName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         subName.setText(bundle.getString("Desktop1080.subName.text")); // NOI18N
         titlePane.add(subName, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1920, 40));
+        subName.getAccessibleContext().setAccessibleName(bundle.getString("Desktop1080.subName.AccessibleContext.accessibleName")); // NOI18N
 
         getContentPane().add(titlePane);
         titlePane.setBounds(0, 0, 1920, 110);
@@ -441,6 +445,7 @@ public class Desktop1080 extends javax.swing.JFrame {
         time.setRequestFocusEnabled(false);
         timePanel.add(time);
         time.setBounds(5, 6, 1430, 420);
+        time.getAccessibleContext().setAccessibleName(bundle.getString("Desktop1080.time.AccessibleContext.accessibleName")); // NOI18N
 
         getContentPane().add(timePanel);
         timePanel.setBounds(480, 110, 1440, 430);
@@ -456,6 +461,7 @@ public class Desktop1080 extends javax.swing.JFrame {
         anteLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         anteLabel.setText(bundle.getString("Desktop1080.anteLabel.text")); // NOI18N
         blindsPanel.add(anteLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 443, 30));
+        anteLabel.getAccessibleContext().setAccessibleName(bundle.getString("Desktop1080.anteLabel.AccessibleContext.accessibleName")); // NOI18N
 
         ante.setFont(new java.awt.Font("Exo", 1, 55)); // NOI18N
         ante.setForeground(new java.awt.Color(255, 255, 255));
@@ -508,13 +514,13 @@ public class Desktop1080 extends javax.swing.JFrame {
         chipsAverageLabel.setForeground(new java.awt.Color(255, 255, 255));
         chipsAverageLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         chipsAverageLabel.setText(bundle.getString("Desktop.chipsAverageLabel.text")); // NOI18N
-        summary.add(chipsAverageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 250, 40));
+        summary.add(chipsAverageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 310, 40));
 
         nextLevelLabel.setFont(new java.awt.Font("Exo", 1, 48)); // NOI18N
         nextLevelLabel.setForeground(new java.awt.Color(255, 255, 255));
         nextLevelLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         nextLevelLabel.setText(bundle.getString("Desktop.nextLevelLabel.text")); // NOI18N
-        summary.add(nextLevelLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 250, 40));
+        summary.add(nextLevelLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 330, 40));
 
         livePlayers.setFont(new java.awt.Font("Exo", 1, 40)); // NOI18N
         livePlayers.setForeground(new java.awt.Color(255, 255, 255));
