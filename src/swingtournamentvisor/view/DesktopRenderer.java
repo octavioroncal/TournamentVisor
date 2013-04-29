@@ -10,14 +10,14 @@ import swingtournamentvisor.model.PrizePosition;
 import swingtournamentvisor.model.TournamentDataView;
 
 public final class DesktopRenderer {
-    
-    private  final TournamentDataView tournamentDataView;
+
+    private final TournamentDataView tournamentDataView;
     private Desktop720 desktop;
     private LevelTimeListener timeListener;
     private DataChangedListener dataListener;
     boolean threadFlag = true;
     private Thread announcementThread;
-            
+
     public DesktopRenderer(TournamentDataView dataParamenter, final JFrame desktopFrame) {
         this.tournamentDataView = dataParamenter;
         this.desktop = (Desktop720) desktopFrame;
@@ -33,7 +33,7 @@ public final class DesktopRenderer {
         newAnnoucementThread();
         announcementThread.start();
     }
-    
+
     private void newAnnoucementThread() {
         announcementThread = new Thread() {
             @Override
@@ -65,7 +65,7 @@ public final class DesktopRenderer {
             }
         };
     }
-    
+
     public void setTimeListener() {
         timeListener = new LevelTimeListener() {
             @Override
@@ -93,9 +93,10 @@ public final class DesktopRenderer {
         desktop.getAnte().setText(tournamentDataView.getAnteBlind().toString());
         desktop.getBb().setText(tournamentDataView.getBigBlind().toString());
         desktop.getSb().setText(tournamentDataView.getSmallBlind().toString());
-        desktop.getBuyins().setText(tournamentDataView.getBuyins()+"");
-        if (tournamentDataView.getPrizeStruct() != null)
+        desktop.getBuyins().setText(tournamentDataView.getBuyins() + "");
+        if (tournamentDataView.getPrizeStruct() != null) {
             showPrizesList();
+        }
         desktop.getChipsAverage().setText(tournamentDataView.getChipsAverage() + "");
         if (tournamentDataView.isRebuyTournament()) {
             desktop.getRebuys().setText(tournamentDataView.getRebuys() + "");
@@ -103,7 +104,7 @@ public final class DesktopRenderer {
         } else {
             desktop.getRebuys().setText(tournamentDataView.getReentries() + "");
             desktop.getRebuysLabel().setText("REENTRIES");
-            
+
         }
         if (tournamentDataView.isAddonTournament()) {
             desktop.getAddonsLabel().setVisible(true);
@@ -121,7 +122,7 @@ public final class DesktopRenderer {
             newAnnoucementThread();
             announcementThread.start();
         }
-        if (tournamentDataView.getTournamentState().toString().contains("BREAK")){
+        if (tournamentDataView.getTournamentState().toString().contains("BREAK")) {
             setBreakView();
         } else {
             setPlayView();
@@ -145,12 +146,11 @@ public final class DesktopRenderer {
         stopAnnouncements();
     }
 
-    public void setVisible(){
+    public void setVisible() {
         desktop.setVisible(true);
     }
-    
-    public void setPauseView(){
-        
+
+    public void setPauseView() {
     }
 
     public void setPlayView() {
@@ -158,26 +158,26 @@ public final class DesktopRenderer {
         desktop.getPausePanel().setVisible(false);
         desktop.getBreakIn().setVisible(true);
     }
-    
+
     public void setBreakView() {
         desktop.getBreakLabel().setText(tournamentDataView.getBreakLabel());
         desktop.getBreakIn().setVisible(false);
         desktop.getBlindsPanel().setVisible(false);
         desktop.getPausePanel().setVisible(true);
     }
-    
-    private void stopAnnouncements(){
+
+    private void stopAnnouncements() {
         announcementThread.interrupt();
         threadFlag = false;
-        
+
     }
-    
+
     private void showPrizesList() {
         ArrayList<PrizePosition> prizesList = tournamentDataView.getPrizeStruct().getPercentagesList();
         int sizeList = prizesList.size();
         /*for (Integer i = 0; i < sizeList; i++) {
-            //desktop.getPosList().get(i).setText(i + 2 + " º");
-        }*/
+         //desktop.getPosList().get(i).setText(i + 2 + " º");
+         }*/
         desktop.getFirstMoney().setText(prizesList.get(0).getMoney() + " €");
         desktop.getSecondMoney().setText(prizesList.get(1).getMoney() + " €");
         desktop.getThirdMoney().setText(prizesList.get(2).getMoney() + " €");
@@ -186,6 +186,6 @@ public final class DesktopRenderer {
         desktop.getSixthMoney().setText(prizesList.get(5).getMoney() + " €");
         /*for (Integer i = 0; i < sizeList; i++) { 
          //desktop.getMoneyList().get(i).setText(prizesList.get(i + 1).getMoney() + " €");
-        }*/
+         }*/
     }
 }
