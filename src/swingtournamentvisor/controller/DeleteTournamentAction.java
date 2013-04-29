@@ -12,7 +12,6 @@ public class DeleteTournamentAction implements Action {
             @Override
             public void run() {
                 tournamentDataView.reset();
-                renderer.refreshData();
                 renderer.closeViewer();
                 tournamentDataView.deleteTournament();
             }

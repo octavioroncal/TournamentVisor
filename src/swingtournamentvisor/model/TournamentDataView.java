@@ -19,7 +19,6 @@ public final class TournamentDataView {
     private Integer addOns = 0;
     private Integer rebuys = 0;
     private Integer timeToBreak = 0;
-    private int time = 0;
     private Integer soundAlert1 = 0;
     private Integer soundAlert2 = 0;
     private Integer transcurredTime = 0;
@@ -47,37 +46,14 @@ public final class TournamentDataView {
     public TournamentDataView() {
         timeListener = new LevelTimeListener() {
             @Override
-            public void timeChanged(final Integer t1) { //Refactorizar
-                int breakTime;
+            public void timeChanged(final Integer t1) {
                 if (t1 == 0) {
                     if (tournamentState == stateType.PLAYING) {
-                        try {
-                            new AlertSound("temple.wav").start(); //SET SOUND ALERT
-                            breakTime = Integer.parseInt(getLevelInProgress().getBreather());
-                            if (breakTime != 0) { // Descanso Normal
-                                setNormalBreak();   
-                            } else { // No Break
-                                setPlayingState();
-                                setLevelInProgress(levelInProgress.getLevel() + 1);
-                            }
-                        } catch (NumberFormatException ex) {
-                            breakTime = Integer.parseInt(getLevelInProgress().getBreather().substring(2));
-                            if (isPresentBreakState(stateType.ED_BREAK)) {
-                                setEndOfDayBreak();
-                                setLevelInProgress(levelInProgress.getLevel() + 1);
-                                getLevelTimeService().stop();
-                            } else {
-                                if (isPresentBreakState(stateType.DB_BREAK)) {
-                                    setDinnerBreak();
-                                } else {
-                                    if (isPresentBreakState(stateType.CR_BREAK)) {
-                                        setChipRaceBreak();
-                                    }
-                                }
-                                getLevelTimeService().setLevelTime(breakTime * 60);
-                            }
-                            blindsPane = false;
-                            breakLabelVisible = true;
+                        new AlertSound("temple.wav").start();
+                        if (!"0".equals(getLevelInProgress().getBreather())) { //Break
+                            setBreakTime(getLevelInProgress().getBreather());
+                        } else { // No Break
+                            setLevelInProgress(levelInProgress.getLevel() + 1);
                         }
                     } else {
                         setPlayingState();
@@ -109,24 +85,49 @@ public final class TournamentDataView {
                         } else {
                             lastTime = false;
                         }
-                    } 
+                    }
                 }
             }
         };
         levelTimeService.addTimeListener(timeListener);
     }
-    
+    private void setBreakTime(String breakCode) {
+        int breakTime;
+        try {
+            breakTime = Integer.parseInt(breakCode);
+            setNormalBreak(breakTime);
+        } catch (NumberFormatException ex) {
+            breakTime = Integer.parseInt(getLevelInProgress().getBreather().substring(2));
+            if (isPresentBreakState(stateType.ED_BREAK)) {
+                setEndOfDayBreak();
+                setLevelInProgress(levelInProgress.getLevel() + 1);
+                getLevelTimeService().stop();
+            } else {
+                if (isPresentBreakState(stateType.DB_BREAK)) {
+                    setDinnerBreak();
+                } else {
+                    if (isPresentBreakState(stateType.CR_BREAK)) {
+                        setChipRaceBreak();
+                    }
+                }
+                getLevelTimeService().setLevelTime(breakTime * 60);
+            }
+            blindsPane = false;
+            breakLabelVisible = true;
+        }
+    }
+
     public int updateTranscurredTime() {// contar si en descanso actualmente
-        int time = 0;
+        int timeVar = 0;
         if (blindStruct != null) {
             for (Level l : blindStruct.getLevelList()) {
                 if (l.getLevel() < getActualLevel()) {
-                    time += l.getTime();
+                    timeVar += l.getTime();
                     if (!"0".equals(l.getBreather())) {
                         try {
-                            time += Integer.parseInt(l.getBreather());
+                            timeVar += Integer.parseInt(l.getBreather());
                         } catch (NumberFormatException ex) {
-                            time += Integer.parseInt(l.getBreather().substring(2));
+                            timeVar += Integer.parseInt(l.getBreather().substring(2));
                         }
                     }
                 } else {
@@ -140,32 +141,32 @@ public final class TournamentDataView {
                 } catch (NumberFormatException ex) {
                     breakIn = Integer.parseInt(levelInProgress.getBreather().substring(2));
                 }
-                time += levelInProgress.getTime() + breakIn - levelTimeService.getLevelTime() / 60;
+                timeVar += levelInProgress.getTime() + breakIn - levelTimeService.getLevelTime() / 60;
             } else {
-                time += levelInProgress.getTime() - levelTimeService.getLevelTime() / 60;
+                timeVar += levelInProgress.getTime() - levelTimeService.getLevelTime() / 60;
             }
 
-            transcurredTime = time;
+            transcurredTime = timeVar;
         }
-        return time;
+        return timeVar;
     }
 
     public int updateTimeToBreak() {
-        int time = 0;
+        int timeVar = 0;
         if (blindStruct != null) {
-            time += levelTimeService.getLevelTime() / 60;
             if ("0".equals(levelInProgress.getBreather())) {
                 for (int i = levelInProgress.getLevel(); i < blindStruct.getLevelList().size() - 1; i++) {
-                    if ("0".equals(blindStruct.get(i - 1).getBreather())) {
+                    if (!"0".equals(blindStruct.get(i - 1).getBreather())) {
                         break;
                     } else {
-                        time += blindStruct.get(i).getTime();
+                        timeVar += blindStruct.get(i).getTime();
                     }
                 }
             }
-            timeToBreak = time;
+            timeVar += levelTimeService.getLevelTime() / 60;
+            timeToBreak = timeVar;
         }
-        return time;
+        return timeVar;
     }
 
     public void reset() {
@@ -221,14 +222,14 @@ public final class TournamentDataView {
         breakLabelVisible = false;
     }
 
-    private void setNormalBreak() {
+    private void setNormalBreak(int breakTime) {
         tournamentState = stateType.BREAK;
         breakLabel = "BREAK";
-        getLevelTimeService().setLevelTime(Integer.parseInt(levelInProgress.getBreather()) * 60);
+        getLevelTimeService().setLevelTime(breakTime * 60);
         blindsPane = false;
         breakLabelVisible = true;
     }
-    
+
     private boolean isPresentBreakState(stateType state) {
         return getLevelInProgress().getBreather().startsWith(state.toString());
     }
@@ -567,14 +568,6 @@ public final class TournamentDataView {
     @XmlElement
     public stateType getTournamentState() {
         return tournamentState;
-    }
-
-    public int getTime() {
-        return time;
-    }
-
-    public void setTime(int time) {
-        this.time = time;
     }
 
     public void setTournamentState(stateType tournamentState) {

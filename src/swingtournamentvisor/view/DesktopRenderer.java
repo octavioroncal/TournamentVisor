@@ -15,8 +15,9 @@ public final class DesktopRenderer {
     private Desktop720 desktop;
     private LevelTimeListener timeListener;
     private DataChangedListener dataListener;
+    boolean threadFlag = true;
     private Thread announcementThread;
-    
+            
     public DesktopRenderer(TournamentDataView dataParamenter, final JFrame desktopFrame) {
         this.tournamentDataView = dataParamenter;
         this.desktop = (Desktop720) desktopFrame;
@@ -27,32 +28,43 @@ public final class DesktopRenderer {
                 refreshData();
             }
         };
+        setPlayView();
         tournamentDataView.getLevelTimeService().addTimeListener(timeListener);
-        announcementThread = new Thread() {
-            @Override
-            public void run() {
-                while (true) {
-                    for (Announcement an : tournamentDataView.getAnnouncementList()) {
-                        if (an.isActive()) {
-                            desktop.getAnnuncement().setText(an.getAnnouncement());
-                            if (an.isHighlight())
-                                desktop.getAnnouncement().setForeground(Color.red);
-                            else 
-                                desktop.getAnnouncement().setForeground(Color.white);
-                        }
-                        showPrizesList();
-                        try {
-                            Thread.sleep(5000);
-                        } catch (InterruptedException ex) {
-                            System.out.println("Thread anuncios Y PRIZES");
-                        }
-                    }
-                }
-            }
-        };
+        newAnnoucementThread();
         announcementThread.start();
     }
     
+    private void newAnnoucementThread() {
+        announcementThread = new Thread() {
+            @Override
+            public void run() {
+                try {
+                    while (threadFlag) {
+                        for (Announcement an : tournamentDataView.getAnnouncementList()) {
+                            if (an.isActive()) {
+                                desktop.getAnnuncement().setText(an.getAnnouncement());
+                                if (an.isHighlight()) {
+                                    desktop.getAnnouncement().setForeground(Color.red);
+                                } else {
+                                    desktop.getAnnouncement().setForeground(Color.white);
+                                }
+                            }
+                            if (!threadFlag) {
+                                break;
+                            }
+                            try {
+                                Thread.sleep(5000);
+                            } catch (InterruptedException ex) {
+                                System.out.println("Thread anuncios Y PRIZES");
+                            }
+                        }
+                    }
+                } catch (java.util.ConcurrentModificationException ex) {
+                    interrupt();
+                }
+            }
+        };
+    }
     
     public void setTimeListener() {
         timeListener = new LevelTimeListener() {
@@ -87,10 +99,10 @@ public final class DesktopRenderer {
         desktop.getChipsAverage().setText(tournamentDataView.getChipsAverage() + "");
         if (tournamentDataView.isRebuyTournament()) {
             desktop.getRebuys().setText(tournamentDataView.getRebuys() + "");
-            desktop.getRebuysLabel().setText("Rebuys");
+            desktop.getRebuysLabel().setText("REBUYS");
         } else {
             desktop.getRebuys().setText(tournamentDataView.getReentries() + "");
-            desktop.getRebuysLabel().setText("Reentries");
+            desktop.getRebuysLabel().setText("REENTRIES");
             
         }
         if (tournamentDataView.isAddonTournament()) {
@@ -98,11 +110,22 @@ public final class DesktopRenderer {
             desktop.getAddons().setText(tournamentDataView.getAddOns() + "");
         } else {
             desktop.getAddonsLabel().setVisible(false);
+            desktop.getAddons().setVisible(false);
         }
         desktop.getLevel().setText(tournamentDataView.getActualLevel() + "");
         desktop.getNextLevel().setText(tournamentDataView.getNextSmallBlind() + "/" + tournamentDataView.getNextBigBlind() + "(" + tournamentDataView.getNextAnteBlind() + ")");
         desktop.getPlayed().setText(convertToTimeFormat(tournamentDataView.updateTranscurredTime()));
         desktop.getBreakIn().setText(convertToTimeFormat(tournamentDataView.updateTimeToBreak()));
+        if (!announcementThread.isAlive()) {
+            threadFlag = true;
+            newAnnoucementThread();
+            announcementThread.start();
+        }
+        if (tournamentDataView.getTournamentState().toString().contains("BREAK")){
+            setBreakView();
+        } else {
+            setPlayView();
+        }
     }
 
     private String convertToTimeFormat(int time) {
@@ -119,6 +142,7 @@ public final class DesktopRenderer {
 
     public void closeViewer() {
         desktop.setVisible(false);
+        stopAnnouncements();
     }
 
     public void setVisible(){
@@ -130,18 +154,38 @@ public final class DesktopRenderer {
     }
 
     public void setPlayView() {
+        desktop.getBlindsPanel().setVisible(true);
+        desktop.getPausePanel().setVisible(false);
+        desktop.getBreakIn().setVisible(true);
+    }
+    
+    public void setBreakView() {
+        desktop.getBreakLabel().setText(tournamentDataView.getBreakLabel());
+        desktop.getBreakIn().setVisible(false);
+        desktop.getBlindsPanel().setVisible(false);
+        desktop.getPausePanel().setVisible(true);
+    }
+    
+    private void stopAnnouncements(){
+        announcementThread.interrupt();
+        threadFlag = false;
         
     }
     
     private void showPrizesList() {
         ArrayList<PrizePosition> prizesList = tournamentDataView.getPrizeStruct().getPercentagesList();
-        desktop.getMoneyFirst().setText(prizesList.get(0).getMoney() + "€");
         int sizeList = prizesList.size();
-/*        for (Integer i = 0; i < sizeList; i++) {
-            desktop.getPosList().get(i).setText(i + 2 + " º");
-        }
-        for (Integer i = 0; i < sizeList; i++) {
-            desktop.getMoneyList().get(i).setText(prizesList.get(i + 1).getMoney() + " €");
+        /*for (Integer i = 0; i < sizeList; i++) {
+            //desktop.getPosList().get(i).setText(i + 2 + " º");
+        }*/
+        desktop.getFirstMoney().setText(prizesList.get(0).getMoney() + " €");
+        desktop.getSecondMoney().setText(prizesList.get(1).getMoney() + " €");
+        desktop.getThirdMoney().setText(prizesList.get(2).getMoney() + " €");
+        desktop.getForthMoney().setText(prizesList.get(3).getMoney() + " €");
+        desktop.getFifthMoney().setText(prizesList.get(4).getMoney() + " €");
+        desktop.getSixthMoney().setText(prizesList.get(5).getMoney() + " €");
+        /*for (Integer i = 0; i < sizeList; i++) { 
+         //desktop.getMoneyList().get(i).setText(prizesList.get(i + 1).getMoney() + " €");
         }*/
     }
 }

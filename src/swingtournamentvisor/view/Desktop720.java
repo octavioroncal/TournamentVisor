@@ -39,7 +39,7 @@ public class Desktop720 extends javax.swing.JFrame {
     }
 
     public JLabel getAddonsLabel() {
-        return addonsLabel;
+        return prizesLabel;
     }
 
     public JLabel getAnte() {
@@ -110,8 +110,8 @@ public class Desktop720 extends javax.swing.JFrame {
         return levelLabel;
     }
 
-    public JLabel getMoneyFirst() {
-        return thirdMoney;
+    public JLabel getFirstMoney() {
+        return firstMoney;
     }
 
     public ArrayList<JLabel> getMoneyList() {
@@ -179,6 +179,10 @@ public class Desktop720 extends javax.swing.JFrame {
         return time;
     }
 
+    public JLabel getBreakLabel(){
+        return breakLabel;
+    }
+    
     public JPanel getTimePanel() {
         return timePanel;
     }
@@ -202,6 +206,30 @@ public class Desktop720 extends javax.swing.JFrame {
     public JLabel getTournamentName() {
         return tournamentName;
     }
+
+    public JLabel getFifthMoney() {
+        return fifthMoney;
+    }
+
+    public JLabel getForthMoney() {
+        return forthMoney;
+    }
+
+    public JLabel getSecondMoney() {
+        return secondMoney;
+    }
+
+    public JLabel getSixthMoney() {
+        return sixthMoney;
+    }
+
+    public JLabel getThirdMoney() {
+        return thirdMoney;
+    }
+    
+    public JPanel getPausePanel(){
+        return pausePanel;
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -219,7 +247,7 @@ public class Desktop720 extends javax.swing.JFrame {
         buyins = new javax.swing.JLabel();
         rebuysLabel = new javax.swing.JLabel();
         rebuys = new javax.swing.JLabel();
-        addonsLabel = new javax.swing.JLabel();
+        prizesLabel = new javax.swing.JLabel();
         addons = new javax.swing.JLabel();
         thirdMoney = new javax.swing.JLabel();
         secondPos = new javax.swing.JLabel();
@@ -228,11 +256,12 @@ public class Desktop720 extends javax.swing.JFrame {
         thirdPos = new javax.swing.JLabel();
         sixthPos = new javax.swing.JLabel();
         forthPos = new javax.swing.JLabel();
-        moneyFirst1 = new javax.swing.JLabel();
+        firstMoney = new javax.swing.JLabel();
         forthMoney = new javax.swing.JLabel();
         fifthMoney = new javax.swing.JLabel();
         sixthMoney = new javax.swing.JLabel();
         secondMoney = new javax.swing.JLabel();
+        addonsLabel1 = new javax.swing.JLabel();
         titlePane = new javax.swing.JPanel();
         tournamentName = new javax.swing.JLabel();
         subName = new javax.swing.JLabel();
@@ -254,6 +283,8 @@ public class Desktop720 extends javax.swing.JFrame {
         livePlayers = new javax.swing.JLabel();
         chipsAverage = new javax.swing.JLabel();
         announcement = new javax.swing.JLabel();
+        pausePanel = new javax.swing.JPanel();
+        breakLabel = new javax.swing.JLabel();
         backgroundPane = new javax.swing.JPanel();
         backgroudLabel = new javax.swing.JLabel();
 
@@ -321,10 +352,10 @@ public class Desktop720 extends javax.swing.JFrame {
         rebuys.setText("0");
         leftPanel.add(rebuys, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 120, 45));
 
-        addonsLabel.setFont(new java.awt.Font("Exo", 1, 26)); // NOI18N
-        addonsLabel.setForeground(new java.awt.Color(255, 255, 255));
-        addonsLabel.setText("ADDONS");
-        leftPanel.add(addonsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 170, 45));
+        prizesLabel.setFont(new java.awt.Font("Exo", 1, 26)); // NOI18N
+        prizesLabel.setForeground(new java.awt.Color(255, 255, 255));
+        prizesLabel.setText("PRIZES");
+        leftPanel.add(prizesLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 170, 45));
 
         addons.setFont(new java.awt.Font("Exo", 1, 40)); // NOI18N
         addons.setForeground(new java.awt.Color(255, 255, 255));
@@ -335,74 +366,79 @@ public class Desktop720 extends javax.swing.JFrame {
         thirdMoney.setFont(new java.awt.Font("Exo", 1, 40)); // NOI18N
         thirdMoney.setForeground(new java.awt.Color(255, 255, 255));
         thirdMoney.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        thirdMoney.setText("0");
-        leftPanel.add(thirdMoney, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 420, 160, 40));
+        thirdMoney.setText("0 €");
+        leftPanel.add(thirdMoney, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 460, 160, 40));
 
         secondPos.setFont(new java.awt.Font("Exo", 1, 26)); // NOI18N
         secondPos.setForeground(new java.awt.Color(255, 255, 255));
         secondPos.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        secondPos.setText("1º");
-        leftPanel.add(secondPos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 120, 40));
+        secondPos.setText("2º");
+        leftPanel.add(secondPos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 120, 40));
 
         fifthPos.setFont(new java.awt.Font("Exo", 1, 26)); // NOI18N
         fifthPos.setForeground(new java.awt.Color(255, 255, 255));
         fifthPos.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        fifthPos.setText("1º");
-        leftPanel.add(fifthPos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 120, 40));
+        fifthPos.setText("5º");
+        leftPanel.add(fifthPos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, 120, 40));
 
         firstPos.setFont(new java.awt.Font("Exo", 1, 26)); // NOI18N
         firstPos.setForeground(new java.awt.Color(255, 255, 255));
         firstPos.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         firstPos.setText("1º");
-        leftPanel.add(firstPos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 120, 40));
+        leftPanel.add(firstPos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 120, 40));
 
         thirdPos.setFont(new java.awt.Font("Exo", 1, 26)); // NOI18N
         thirdPos.setForeground(new java.awt.Color(255, 255, 255));
         thirdPos.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        thirdPos.setText("1º");
-        leftPanel.add(thirdPos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 120, 40));
+        thirdPos.setText("3º");
+        leftPanel.add(thirdPos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 120, 40));
 
         sixthPos.setFont(new java.awt.Font("Exo", 1, 26)); // NOI18N
         sixthPos.setForeground(new java.awt.Color(255, 255, 255));
         sixthPos.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        sixthPos.setText("1º");
-        leftPanel.add(sixthPos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 540, 120, 40));
+        sixthPos.setText("6º");
+        leftPanel.add(sixthPos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 580, 120, 40));
 
         forthPos.setFont(new java.awt.Font("Exo", 1, 26)); // NOI18N
         forthPos.setForeground(new java.awt.Color(255, 255, 255));
         forthPos.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        forthPos.setText("1º");
-        leftPanel.add(forthPos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 460, 120, 40));
+        forthPos.setText("4º");
+        leftPanel.add(forthPos, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 120, 40));
 
-        moneyFirst1.setFont(new java.awt.Font("Exo", 1, 40)); // NOI18N
-        moneyFirst1.setForeground(new java.awt.Color(255, 255, 255));
-        moneyFirst1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        moneyFirst1.setText("0");
-        leftPanel.add(moneyFirst1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 160, 40));
+        firstMoney.setFont(new java.awt.Font("Exo", 1, 40)); // NOI18N
+        firstMoney.setForeground(new java.awt.Color(255, 255, 255));
+        firstMoney.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        firstMoney.setText("0 €");
+        leftPanel.add(firstMoney, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 380, 160, 40));
 
         forthMoney.setFont(new java.awt.Font("Exo", 1, 40)); // NOI18N
         forthMoney.setForeground(new java.awt.Color(255, 255, 255));
         forthMoney.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        forthMoney.setText("0");
-        leftPanel.add(forthMoney, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 460, 160, 40));
+        forthMoney.setText("0 €");
+        leftPanel.add(forthMoney, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 500, 160, 40));
 
         fifthMoney.setFont(new java.awt.Font("Exo", 1, 40)); // NOI18N
         fifthMoney.setForeground(new java.awt.Color(255, 255, 255));
         fifthMoney.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        fifthMoney.setText("0");
-        leftPanel.add(fifthMoney, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 500, 160, 40));
+        fifthMoney.setText("0 €");
+        leftPanel.add(fifthMoney, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 540, 160, 40));
 
         sixthMoney.setFont(new java.awt.Font("Exo", 1, 40)); // NOI18N
         sixthMoney.setForeground(new java.awt.Color(255, 255, 255));
         sixthMoney.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        sixthMoney.setText("0");
-        leftPanel.add(sixthMoney, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 540, 160, 40));
+        sixthMoney.setText("0 €");
+        leftPanel.add(sixthMoney, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 580, 160, 40));
 
         secondMoney.setFont(new java.awt.Font("Exo", 1, 40)); // NOI18N
         secondMoney.setForeground(new java.awt.Color(255, 255, 255));
         secondMoney.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        secondMoney.setText("0");
-        leftPanel.add(secondMoney, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 380, 160, 40));
+        secondMoney.setText("0 €");
+        leftPanel.add(secondMoney, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 420, 160, 40));
+
+        addonsLabel1.setFont(new java.awt.Font("Exo", 1, 26)); // NOI18N
+        addonsLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        addonsLabel1.setText("ADDONS");
+        leftPanel.add(addonsLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 170, 45));
 
         getContentPane().add(leftPanel);
         leftPanel.setBounds(0, 90, 310, 630);
@@ -529,6 +565,15 @@ public class Desktop720 extends javax.swing.JFrame {
         announcement.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         bottomPanel.add(announcement, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 870, 60));
 
+        pausePanel.setOpaque(false);
+
+        breakLabel.setFont(new java.awt.Font("Exo", 0, 60)); // NOI18N
+        breakLabel.setForeground(new java.awt.Color(255, 255, 255));
+        breakLabel.setText("BREAK TIME");
+        pausePanel.add(breakLabel);
+
+        bottomPanel.add(pausePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 960, 100));
+
         getContentPane().add(bottomPanel);
         bottomPanel.setBounds(320, 410, 960, 310);
 
@@ -552,7 +597,7 @@ public class Desktop720 extends javax.swing.JFrame {
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addons;
-    private javax.swing.JLabel addonsLabel;
+    private javax.swing.JLabel addonsLabel1;
     private javax.swing.JLabel announcement;
     private javax.swing.JLabel ante;
     private javax.swing.JLabel anteLabel;
@@ -564,12 +609,14 @@ public class Desktop720 extends javax.swing.JFrame {
     private javax.swing.JPanel bottomPanel;
     private javax.swing.JLabel breakIn;
     private javax.swing.JLabel breakInLabel;
+    private javax.swing.JLabel breakLabel;
     private javax.swing.JLabel buyins;
     private javax.swing.JLabel buyinsLabel;
     private javax.swing.JLabel chipsAverage;
     private javax.swing.JLabel chipsAverageLabel;
     private javax.swing.JLabel fifthMoney;
     private javax.swing.JLabel fifthPos;
+    private javax.swing.JLabel firstMoney;
     private javax.swing.JLabel firstPos;
     private javax.swing.JLabel forthMoney;
     private javax.swing.JLabel forthPos;
@@ -577,12 +624,13 @@ public class Desktop720 extends javax.swing.JFrame {
     private javax.swing.JLabel level;
     private javax.swing.JLabel levelLabel;
     private javax.swing.JLabel livePlayers;
-    private javax.swing.JLabel moneyFirst1;
     private javax.swing.JLabel nextLevel;
     private javax.swing.JLabel nextLevelLabel;
+    private javax.swing.JPanel pausePanel;
     private javax.swing.JLabel played;
     private javax.swing.JLabel playedLabel;
     private javax.swing.JLabel playersLabel;
+    private javax.swing.JLabel prizesLabel;
     private javax.swing.JLabel rebuys;
     private javax.swing.JLabel rebuysLabel;
     private javax.swing.JLabel sb;
