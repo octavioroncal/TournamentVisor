@@ -98,23 +98,23 @@ public final class TournamentDataView {
             setNormalBreak(breakTime);
         } catch (NumberFormatException ex) {
             breakTime = Integer.parseInt(getLevelInProgress().getBreather().substring(2));
-            if (isPresentBreakState(stateType.ED_BREAK)) {
+            if (breakCode.contains("ED")) {
                 setEndOfDayBreak();
                 setLevelInProgress(levelInProgress.getLevel() + 1);
                 getLevelTimeService().stop();
             } else {
-                if (isPresentBreakState(stateType.DB_BREAK)) {
+                if (breakCode.contains("DB")) {
                     setDinnerBreak();
                 } else {
-                    if (isPresentBreakState(stateType.CR_BREAK)) {
+                    if (breakCode.contains("CR")) {
                         setChipRaceBreak();
                     }
                 }
                 getLevelTimeService().setLevelTime(breakTime * 60);
             }
-            blindsPane = false;
-            breakLabelVisible = true;
         }
+        blindsPane = false;
+        breakLabelVisible = true;
     }
 
     public int updateTranscurredTime() {// contar si en descanso actualmente
@@ -207,6 +207,7 @@ public final class TournamentDataView {
 
     private void setDinnerBreak() {
         tournamentState = stateType.DB_BREAK;
+        System.out.println("Break Type: " + getTournamentState().toString());
         breakLabel = "DINNER BREAK";
     }
 
@@ -218,16 +219,12 @@ public final class TournamentDataView {
     private void setPlayingState() {
         tournamentState = stateType.PLAYING;
         breakLabel = "";
-        blindsPane = true;
-        breakLabelVisible = false;
     }
 
     private void setNormalBreak(int breakTime) {
         tournamentState = stateType.BREAK;
         breakLabel = "BREAK";
         getLevelTimeService().setLevelTime(breakTime * 60);
-        blindsPane = false;
-        breakLabelVisible = true;
     }
 
     private boolean isPresentBreakState(stateType state) {
@@ -358,6 +355,7 @@ public final class TournamentDataView {
                     l.getSmallBlind(), l.getAnte(), l.getBigBlind(), l.getBreather());
             levelTimeService.setLevelTime(levelInProgress.getTime() * 60);
             setNextLevel(blindStruct.nextLevel(levelInProgress));
+            setPlayingState();
         }
         updateTimeToBreak();
         updateTranscurredTime();

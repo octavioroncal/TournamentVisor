@@ -39,7 +39,7 @@ public class Desktop720 extends javax.swing.JFrame {
     }
 
     public JLabel getAddonsLabel() {
-        return prizesLabel;
+        return addonsLabel;
     }
 
     public JLabel getAnte() {
@@ -246,8 +246,8 @@ public class Desktop720 extends javax.swing.JFrame {
         buyinsLabel = new javax.swing.JLabel();
         buyins = new javax.swing.JLabel();
         rebuysLabel = new javax.swing.JLabel();
-        rebuys = new javax.swing.JLabel();
         prizesLabel = new javax.swing.JLabel();
+        rebuys = new javax.swing.JLabel();
         addons = new javax.swing.JLabel();
         thirdMoney = new javax.swing.JLabel();
         secondPos = new javax.swing.JLabel();
@@ -261,7 +261,7 @@ public class Desktop720 extends javax.swing.JFrame {
         fifthMoney = new javax.swing.JLabel();
         sixthMoney = new javax.swing.JLabel();
         secondMoney = new javax.swing.JLabel();
-        addonsLabel1 = new javax.swing.JLabel();
+        addonsLabel = new javax.swing.JLabel();
         titlePane = new javax.swing.JPanel();
         tournamentName = new javax.swing.JLabel();
         subName = new javax.swing.JLabel();
@@ -346,16 +346,16 @@ public class Desktop720 extends javax.swing.JFrame {
         rebuysLabel.setText("REBUY-REE");
         leftPanel.add(rebuysLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 170, 45));
 
+        prizesLabel.setFont(new java.awt.Font("Exo", 1, 26)); // NOI18N
+        prizesLabel.setForeground(new java.awt.Color(255, 255, 255));
+        prizesLabel.setText("PRIZES");
+        leftPanel.add(prizesLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 170, 45));
+
         rebuys.setFont(new java.awt.Font("Exo", 1, 40)); // NOI18N
         rebuys.setForeground(new java.awt.Color(255, 255, 255));
         rebuys.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         rebuys.setText("0");
         leftPanel.add(rebuys, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, 120, 45));
-
-        prizesLabel.setFont(new java.awt.Font("Exo", 1, 26)); // NOI18N
-        prizesLabel.setForeground(new java.awt.Color(255, 255, 255));
-        prizesLabel.setText("PRIZES");
-        leftPanel.add(prizesLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 170, 45));
 
         addons.setFont(new java.awt.Font("Exo", 1, 40)); // NOI18N
         addons.setForeground(new java.awt.Color(255, 255, 255));
@@ -435,10 +435,10 @@ public class Desktop720 extends javax.swing.JFrame {
         secondMoney.setText("0 €");
         leftPanel.add(secondMoney, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 420, 160, 40));
 
-        addonsLabel1.setFont(new java.awt.Font("Exo", 1, 26)); // NOI18N
-        addonsLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        addonsLabel1.setText("ADDONS");
-        leftPanel.add(addonsLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 170, 45));
+        addonsLabel.setFont(new java.awt.Font("Exo", 1, 26)); // NOI18N
+        addonsLabel.setForeground(new java.awt.Color(255, 255, 255));
+        addonsLabel.setText("ADDONS");
+        leftPanel.add(addonsLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, 170, 45));
 
         getContentPane().add(leftPanel);
         leftPanel.setBounds(0, 90, 310, 630);
@@ -597,7 +597,7 @@ public class Desktop720 extends javax.swing.JFrame {
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel addons;
-    private javax.swing.JLabel addonsLabel1;
+    private javax.swing.JLabel addonsLabel;
     private javax.swing.JLabel announcement;
     private javax.swing.JLabel ante;
     private javax.swing.JLabel anteLabel;
