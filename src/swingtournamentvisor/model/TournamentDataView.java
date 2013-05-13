@@ -31,6 +31,7 @@ public final class TournamentDataView {
     private boolean lastTime = false;
     private boolean rebuyTournament = false;
     private boolean addonTournament = false;
+    private boolean finalizedTournament = false;
     private boolean soundAllow = false;
     private BlindStruct blindStruct;
     private PrizeStruct prizeStruct;
@@ -53,11 +54,11 @@ public final class TournamentDataView {
                         if (!"0".equals(getLevelInProgress().getBreather())) { //Break
                             setBreakTime(getLevelInProgress().getBreather());
                         } else { // No Break
-                            setLevelInProgress(levelInProgress.getLevel() + 1);
+                            levelUp();
                         }
                     } else {
                         setPlayingState();
-                        setLevelInProgress(levelInProgress.getLevel() + 1);
+                        levelUp();
                     }
                     for (DataChangedListener listener : dataChangedlistenerList) {
                         listener.dataChanged();
@@ -100,8 +101,8 @@ public final class TournamentDataView {
             breakTime = Integer.parseInt(getLevelInProgress().getBreather().substring(2));
             if (breakCode.contains("ED")) {
                 setEndOfDayBreak();
-                setLevelInProgress(levelInProgress.getLevel() + 1);
                 getLevelTimeService().stop();
+                levelUp();
             } else {
                 if (breakCode.contains("DB")) {
                     setDinnerBreak();
@@ -117,6 +118,9 @@ public final class TournamentDataView {
         breakLabelVisible = true;
     }
 
+    public void addDataListener(DataChangedListener dataListener) {
+        dataChangedlistenerList.add(dataListener);
+    }
     public int updateTranscurredTime() {// contar si en descanso actualmente
         int timeVar = 0;
         if (blindStruct != null) {
@@ -145,10 +149,25 @@ public final class TournamentDataView {
             } else {
                 timeVar += levelInProgress.getTime() - levelTimeService.getLevelTime() / 60;
             }
-
             transcurredTime = timeVar;
         }
         return timeVar;
+    }
+
+    private void levelUp() {
+        if (!isLastLevel()) {
+            setLevelInProgress(levelInProgress.getLevel() + 1);
+        } else {
+            finalizeTournament();
+        }
+    }
+
+    private void finalizeTournament() {
+        getLevelTimeService().stop();
+        tournamentState = stateType.STOPPED;
+        for (DataChangedListener listener : dataChangedlistenerList) {
+            listener.dataChanged();
+        }
     }
 
     public int updateTimeToBreak() {
@@ -207,7 +226,6 @@ public final class TournamentDataView {
 
     private void setDinnerBreak() {
         tournamentState = stateType.DB_BREAK;
-        System.out.println("Break Type: " + getTournamentState().toString());
         breakLabel = "DINNER BREAK";
     }
 
@@ -225,10 +243,6 @@ public final class TournamentDataView {
         tournamentState = stateType.BREAK;
         breakLabel = "BREAK";
         getLevelTimeService().setLevelTime(breakTime * 60);
-    }
-
-    private boolean isPresentBreakState(stateType state) {
-        return getLevelInProgress().getBreather().startsWith(state.toString());
     }
 
     public void pause() {
@@ -271,7 +285,7 @@ public final class TournamentDataView {
     }
 
     public boolean isLastLevel() {
-        Level l = getBlindStruct().get(getBlindStruct().getLevelList().size() - 1);
+        Level l = getBlindStruct().getLastLevel();
         if (l.getLevel() == getLevelInProgress().getLevel()) {
             return true;
         }
@@ -353,8 +367,13 @@ public final class TournamentDataView {
             Level l = blindStruct.get(level - 1);
             levelInProgress.setAll(l.getLevel(), l.getTime(),
                     l.getSmallBlind(), l.getAnte(), l.getBigBlind(), l.getBreather());
+            if (!isLastLevel()) {
+                setNextLevel(blindStruct.nextLevel(levelInProgress));
+            } else {
+                nextLevel = null;
+                nextBlinds = "";
+            }
             levelTimeService.setLevelTime(levelInProgress.getTime() * 60);
-            setNextLevel(blindStruct.nextLevel(levelInProgress));
             setPlayingState();
         }
         updateTimeToBreak();
@@ -566,6 +585,15 @@ public final class TournamentDataView {
     @XmlElement
     public stateType getTournamentState() {
         return tournamentState;
+    }
+
+    @XmlElement
+    public boolean isFinalizedTournament() {
+        return finalizedTournament;
+    }
+
+    public void setFinalizedTournament(boolean finalizedTournament) {
+        this.finalizedTournament = finalizedTournament;
     }
 
     public void setTournamentState(stateType tournamentState) {

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JFrame;
 import swingtournamentvisor.model.Announcement;
-import swingtournamentvisor.model.DataChangedListener;
 import swingtournamentvisor.model.LevelTimeListener;
 import swingtournamentvisor.model.PrizePosition;
 import swingtournamentvisor.model.TournamentDataView;
@@ -14,7 +13,6 @@ public final class DesktopRenderer {
     private final TournamentDataView tournamentDataView;
     private Desktop720 desktop;
     private LevelTimeListener timeListener;
-    private DataChangedListener dataListener;
     boolean threadFlag = true;
     private Thread announcementThread;
 
@@ -22,12 +20,6 @@ public final class DesktopRenderer {
         this.tournamentDataView = dataParamenter;
         this.desktop = (Desktop720) desktopFrame;
         setTimeListener();
-        dataListener = new DataChangedListener() {
-            @Override
-            public void dataChanged() {
-                refreshData();
-            }
-        };
         setPlayView();
         tournamentDataView.getLevelTimeService().addTimeListener(timeListener);
         newAnnoucementThread();
@@ -114,7 +106,12 @@ public final class DesktopRenderer {
             desktop.getAddons().setVisible(false);
         }
         desktop.getLevel().setText(tournamentDataView.getActualLevel() + "");
-        desktop.getNextLevel().setText(tournamentDataView.getNextSmallBlind() + "/" + tournamentDataView.getNextBigBlind() + "(" + tournamentDataView.getNextAnteBlind() + ")");
+        if (!tournamentDataView.isLastLevel())
+            desktop.getNextLevel().setText(tournamentDataView.getNextSmallBlind() + "/" + tournamentDataView.getNextBigBlind() + "(" + tournamentDataView.getNextAnteBlind() + ")");
+        else {
+            desktop.getNextLevelLabel().setText("");
+            desktop.getNextLevel().setText("");
+        }
         desktop.getPlayed().setText(convertToTimeFormat(tournamentDataView.updateTranscurredTime()));
         desktop.getBreakIn().setText(convertToTimeFormat(tournamentDataView.updateTimeToBreak()));
         if (!announcementThread.isAlive()) {
@@ -125,8 +122,13 @@ public final class DesktopRenderer {
         if (tournamentDataView.getTournamentState().toString().contains("BREAK")) {
             setBreakView();
         } else {
-            setPlayView();
+            if (tournamentDataView.getTournamentState().toString().contains("STOPPED"))  {
+                setFinishView();
+            } else {
+                setPlayView();
+            }
         }
+        
     }
 
     private String convertToTimeFormat(int time) {
@@ -151,6 +153,15 @@ public final class DesktopRenderer {
     }
 
     public void setPauseView() {
+        desktop.getBreakLabel().setVisible(true);
+    }
+    
+    public void setFinishView() {
+        desktop.getBreakLabel().setVisible(true);
+        desktop.getBreakLabel().setText("TOURNAMENT FINISHED");
+        desktop.getBreakIn().setVisible(false);
+        desktop.getBlindsPanel().setVisible(false);
+        desktop.getPausePanel().setVisible(true);
     }
 
     public void setPlayView() {

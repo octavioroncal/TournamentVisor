@@ -21,7 +21,7 @@ public class BlindStruct  {
                 return levelList.get((levelList.indexOf(l)) + 1);
             }
         }
-        return null;
+        return level;
     }
 
     public Level previousLevel(Level level) {
@@ -39,6 +39,10 @@ public class BlindStruct  {
     
     public Level get(int index){
         return levelList.get(index);
+    }
+
+    public Level getLastLevel(){
+        return levelList.get(levelList.size()-1);
     }
     
     @XmlElement

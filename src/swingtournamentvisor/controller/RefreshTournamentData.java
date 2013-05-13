@@ -35,9 +35,6 @@ public class RefreshTournamentData implements Action {
                 tournamentDataView.setAddOns(tdv.getAddOns());
                 tournamentDataView.setAnnouncementList(tdv.getAnnouncementList());
                 tournamentDataView.setTournamentState(tdv.getTournamentState());
-                /*if (!tournamentDataView.getLevelTimeService().isRunning()) {
-                    tournamentDataView.getLevelTimeService().setLevelTime(tdv.getTime());
-                }*/
                 renderer.setVisible();
                 renderer.refreshData();
             }

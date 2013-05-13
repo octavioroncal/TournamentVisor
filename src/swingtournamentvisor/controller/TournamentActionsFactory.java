@@ -14,6 +14,7 @@ public class TournamentActionsFactory extends ActionsFactory {
     private final String POLL = "POLL";
     private final String UNLOCK = "UNLOCK";
     private final String LOCK = "LOCK";
+    private final String FINISH_TOURNAMENT = "FINISH_TOURNAMENT";
 
     private TournamentDataView tournamentData = new TournamentDataView();
     
@@ -38,6 +39,8 @@ public class TournamentActionsFactory extends ActionsFactory {
                 return new CloseVisorAction();
             case LOCK:
                 return new LockVisorAction();
+            case FINISH_TOURNAMENT:
+                return new FinishAction();
             case POLL:
                 return new PollAction();
             default:
